@@ -14,11 +14,14 @@ import (
 
 
 func main() {
-	godotenv.Load(".env")
+	err := godotenv.Load(".env")
+	if err != nil {
+		log.Println("Warning: .env file not found")
+	}
 
 	portString := os.Getenv("PORT")
 	if portString == "" {
-		log.Fatal("PORT is not found in the environment.")
+		log.Fatal("PORT is not set in the environment variables")
 	}
 
 	router := chi.NewRouter()
@@ -33,11 +36,9 @@ func main() {
 
 	v1Router := chi.NewRouter()
 
-	v1Router.HandleFunc("/ready", handleReadiness)
+	v1Router.HandleFunc("/healthz", handleReadiness)
 
 	router.Mount("/v1", v1Router)
-
-	router.Use()
 
 	server := &http.Server{
 		Handler: router,
@@ -45,7 +46,7 @@ func main() {
 	}
 
 	log.Printf("Server starting on port %v", portString)
-	err := server.ListenAndServe()
+	err = server.ListenAndServe()
 	if err != nil {
 		log.Fatal(err)
 	}

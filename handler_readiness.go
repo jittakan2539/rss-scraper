@@ -1,3 +1,7 @@
 package main
 
-handleReadiness(w http.ResponseWriter, r *http.Request)
+import "net/http"
+
+func handleReadiness(w http.ResponseWriter, r *http.Request) {
+	responseWithJSON(w, 200, struct{}{})
+}
