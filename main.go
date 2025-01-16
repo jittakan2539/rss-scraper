@@ -8,10 +8,13 @@ import (
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/cors"
+	"github.com/jittakan2539/rss-scraper/internal/database"
 	"github.com/joho/godotenv"
 )
 
-
+type apiConfig struct {
+	DB *database.Queries
+}
 
 func main() {
 	err := godotenv.Load(".env")
