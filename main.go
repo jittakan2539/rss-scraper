@@ -35,8 +35,8 @@ func main() {
 	}))
 
 	v1Router := chi.NewRouter()
-
-	v1Router.HandleFunc("/healthz", handleReadiness)
+	v1Router.Get("/healthz", handlerReadiness)
+	v1Router.Get("/err", handlerError)
 
 	router.Mount("/v1", v1Router)
 
