@@ -29,6 +29,7 @@ func main() {
 	if portString == "" {
 		log.Fatal("PORT is not set in the environment")
 	}
+
 	dbURL := os.Getenv("DB_URL")
 	if dbURL == "" {
 		log.Fatal("DB_URL is not set in the environment")
@@ -39,11 +40,9 @@ func main() {
 		log.Fatal("Can't connect to database.", err)
 	}
 
-	queries, err := database.New(connection)
-
 	//-------------API--------//
 	apiCfg := apiConfig{
-		DB: database.New(connection)
+		DB: database.New(connection),
 	}
 
 	router := chi.NewRouter()
